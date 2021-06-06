@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Book Details</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        Book Details
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Book Details</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <form th:action="@{/book/save}" th:object="${book}" method="post" class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Book Id</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  readonly="readonly" th:field="*{id}" placeholder="Book ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Category:<span>*</span></label>
+                            <div class="col-sm-10">
+                                <select th:field="*{category}" class="form-control" required>
+                                    <th:block th:each="category : ${categories}">
+                                        <option th:value="${category.id}" th:utext="${category.name}" />
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  th:field="*{name}" />
+                                <p class="text-red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Author</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" th:field="*{author}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Description</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" th:field="*{description}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer center">
+                        <a th:href="@{/book/list}">
+                            <button type="button" class="btn btn-default"><i class="fa fa-right"></i> Cancel</button>
+                        </a>
+                        <button type="submit" class="btn btn-info pull-right"><i class="fa fa-save"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+</th:block>
+
+</body>
+
+</html>

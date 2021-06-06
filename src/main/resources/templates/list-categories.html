@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <title>List of Categories</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        List of Categories
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/library"><i class="fa fa-dashboard"></i> Library</a></li>
+        <li class="active">List of Categories</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                    <div class="box-footer center">
+                        <div sec:authorize="hasRole('ROLE_LIBRARIAN')"><a th:href="@{/category/add}">
+                            <button type="button" class="btn btn-primary pull-right" style="background-color: #6796F2"><i class="fa fa-plus"></i> Add new</button>
+                        </a></div>
+                        <form class="search" th:action="@{/category/list}" th:object="${category}" method="get">
+                        <div class="input-group ">
+                            <input type="search" name="keyword" class="form-inline" placeholder="Search">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+                    <div th:if="${param.success}">
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-check"></i> Success!</h4>
+                            Information saved successfully.
+                        </div>
+                    </div>
+                    <div th:if="${param.deleted}">
+                        <div class="alert alert-info alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-check"></i> Deleted!</h4>
+                            Information deleted successfully.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                                   aria-describedby="example1_info">
+                                <thead class="thead">
+                                <tr>
+                                    <th>Category ID</th>
+                                    <th>Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="category : ${categories}">
+                                        <td th:text="${category.id}">Category ID</td>
+                                        <td th:text="${category.name}">Name</td>
+                                        <td>
+                                            <a href="#" style="background-color: #6796F2" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/book/list/' + ${category.id}}"><i class="fa fa-location-arrow"></i> View Books</a>
+                                            <div sec:authorize="hasRole('ROLE_LIBRARIAN')"><a href="#" style="background-color: #6796F2" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/category/edit/' + ${category.id}}"><i class="fa fa-edit"></i> Edit</a>
+                                            <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/category/delete/' + ${category.id}}"><i class="fa fa-trash-o"></i> Delete</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a th:href="@{/library}">
+                        <button type="button" class="btn btn-primary pull-left" style="background-color: #6796F2"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
