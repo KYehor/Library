@@ -22,6 +22,13 @@
                 <form th:action="@{/category/save}" th:object="${category}" method="post" class="form-horizontal">
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Category Id</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"  readonly="readonly" th:field="*{id}" placeholder="Category ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control"  th:field="*{name}" />

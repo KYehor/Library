@@ -4,9 +4,12 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -30,7 +33,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        Set<UserRole> roles = this.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (UserRole role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+        }
+
+        return authorities;
     }
 
     @Override

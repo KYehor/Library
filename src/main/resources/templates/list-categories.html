@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{layout}">
 <head>
     <title>List of Categories</title>
@@ -20,7 +21,8 @@
         <div class="col-xs-12">
             <div class="box">
                     <div class="box-footer center">
-                        <div sec:authorize="hasRole('ROLE_LIBRARIAN')"><a th:href="@{/category/add}">
+                        <div sec:authorize="hasAuthority('LIBRARIAN')">
+                            <a th:href="@{/category/add}">
                             <button type="button" class="btn btn-primary pull-right" style="background-color: #6796F2"><i class="fa fa-plus"></i> Add new</button>
                         </a></div>
                         <form class="search" th:action="@{/category/list}" th:object="${category}" method="get">
@@ -63,9 +65,8 @@
                                         <td th:text="${category.name}">Name</td>
                                         <td>
                                             <a href="#" style="background-color: #6796F2" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/book/list/' + ${category.id}}"><i class="fa fa-location-arrow"></i> View Books</a>
-                                            <div sec:authorize="hasRole('ROLE_LIBRARIAN')"><a href="#" style="background-color: #6796F2" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/category/edit/' + ${category.id}}"><i class="fa fa-edit"></i> Edit</a>
-                                            <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/category/delete/' + ${category.id}}"><i class="fa fa-trash-o"></i> Delete</a>
-                                            </div>
+                                            <a sec:authorize="hasAuthority('LIBRARIAN')" href="#" style="background-color: #6796F2" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/category/edit/' + ${category.id}}"><i class="fa fa-edit"></i> Edit</a>
+                                            <a sec:authorize="hasAuthority('LIBRARIAN')" href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/category/delete/' + ${category.id}}"><i class="fa fa-trash-o"></i> Delete</a>
                                         </td>
                                     </tr>
                                 </tbody>

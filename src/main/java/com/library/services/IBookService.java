@@ -5,7 +5,6 @@ import com.library.entities.Book;
 import java.util.List;
 
 public interface IBookService {
-    Book updateBook(Book book);
     List<Book> listAll();
     void save(Book book);
     void delete(Long id);

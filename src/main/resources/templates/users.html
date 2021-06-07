@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <title>List of Users</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>List of Users</h1>
+    <ol class="breadcrumb">
+        <li><a href="/library"><i class="fa fa-dashboard"></i> Library</a></li>
+        <li class="active">List of Users</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                               aria-describedby="example1_info">
+                            <thead class="thead">
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th sec:authorize="hasAuthority('LIBRARIAN')">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}">User ID </td>
+                                <td th:text="${user.username}">Name </td>
+                                <td th:text="${user.roles}"> Role </td>
+                                <td>
+                                    <a sec:authorize="hasAuthority('LIBRARIAN')" href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/security/delete/' + ${user.id}}"><i class="fa fa-trash-o"></i> Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <a th:href="@{/library}">
+                    <button type="button" class="btn btn-primary pull-left" style="background-color: #6796F2"><i class="fa fa-arrow-left"></i> Back</button>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>

@@ -20,10 +20,6 @@ public class IBookServiceImpl implements IBookService {
         this.iBookRepository = iBookRepository;
 
     }
-    @Override
-    public Book updateBook(Book book) {
-        return iBookRepository.save(book);
-    }
 
     public void save(Book book){
         iBookRepository.save(book);

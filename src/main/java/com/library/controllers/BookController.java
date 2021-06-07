@@ -63,8 +63,6 @@ public class BookController {
         return list_redirect+"?success";
     }
 
-
-
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         iBookService.delete(id);
